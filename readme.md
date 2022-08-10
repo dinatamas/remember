@@ -39,3 +39,5 @@ Tasks
   - In case of errors write to stderr and exit with error code.
 
   - Make `history_size` configurable.
+
+  - Write shell autocompletion functions for collections.
