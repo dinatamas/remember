@@ -26,3 +26,12 @@ is calculated based on the last time the value was used:
 | within last day  | score * 2 |
 | within last week | score / 2 |
 | otherwise        | score / 4 |
+
+Tasks
+-----
+
+  - Respect the XDG Base Directory specification.
+
+  - Add support for Windows and other platforms.
+
+  - Handle file system exceptions (e.g. permission denied).
