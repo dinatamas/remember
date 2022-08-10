@@ -5,6 +5,8 @@ import os
 from pathlib import Path
 from time import time
 
+history_size = 1000
+
 
 def main():
     args = parse_args()
@@ -59,7 +61,7 @@ def use(collection, value):
     else:
         collection[value] = {'value': value, 'score': 1}
     collection[value]['timestamp'] = int(time())
-    return list(collection.values())
+    return sorted(collection.values(), key=lambda r: r['timestamp'])[-history_size:]
 
 
 def recall(collection):
@@ -76,7 +78,7 @@ def recall(collection):
         return record['score'] // 4
 
     for record in sorted(collection, key=_frecency, reverse=True):
-        print(record)
+        print(record['value'])
 
 
 if __name__ == '__main__':

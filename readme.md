@@ -37,3 +37,5 @@ Tasks
   - Handle file system exceptions (e.g. permission denied).
 
   - In case of errors write to stderr and exit with error code.
+
+  - Make `history_size` configurable.
