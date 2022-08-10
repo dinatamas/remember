@@ -3,6 +3,7 @@ from argparse import ArgumentParser
 import json
 import os
 from pathlib import Path
+from time import time
 
 
 def main():
@@ -57,15 +58,24 @@ def use(collection, value):
         collection[value]['score'] += 1
     else:
         collection[value] = {'value': value, 'score': 1}
+    collection[value]['timestamp'] = int(time())
     return list(collection.values())
 
 
 def recall(collection):
+    now = time()
 
-    def _frequency(record):
-        return record['score']
+    def _frecency(record):
+        diff = now - record['timestamp']
+        if diff < 60 * 60:
+            return record['score'] * 4
+        if diff < 60 * 60 * 24:
+            return record['score'] * 2
+        if diff < 60 * 60 * 24 * 7:
+            return record['score'] // 2
+        return record['score'] // 4
 
-    for record in sorted(collection, key=_frequency, reverse=True):
+    for record in sorted(collection, key=_frecency, reverse=True):
         print(record)
 
 
