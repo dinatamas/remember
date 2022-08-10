@@ -19,7 +19,12 @@ def main():
     else:
         collection = []
 
-    print(collection)
+    if args.command == 'use':
+        collection = use(collection, args.value)
+        with open(datafile, 'w') as f:
+            json.dump(collection, f)
+    if args.command == 'recall':
+        recall(collection)
 
 
 def parse_args():
@@ -44,6 +49,15 @@ def get_datadir():
     if not datadir.is_dir():
         os.mkdir(datadir)
     return datadir
+
+
+def use(collection, value):
+    return collection
+
+
+def recall(collection):
+    for record in collection:
+        print(record)
 
 
 if __name__ == '__main__':
