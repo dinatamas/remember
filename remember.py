@@ -52,11 +52,20 @@ def get_datadir():
 
 
 def use(collection, value):
-    return collection
+    collection = {record['value']:record for record in collection}
+    if value in collection:
+        collection[value]['score'] += 1
+    else:
+        collection[value] = {'value': value, 'score': 1}
+    return list(collection.values())
 
 
 def recall(collection):
-    for record in collection:
+
+    def _frequency(record):
+        return record['score']
+
+    for record in sorted(collection, key=_frequency, reverse=True):
         print(record)
 
 
