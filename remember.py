@@ -70,12 +70,14 @@ def recall(collection):
     def _frecency(record):
         diff = now - record['timestamp']
         if diff < 60 * 60:
-            return record['score'] * 4
-        if diff < 60 * 60 * 24:
-            return record['score'] * 2
-        if diff < 60 * 60 * 24 * 7:
-            return record['score'] // 2
-        return record['score'] // 4
+            multiplier = 4
+        elif diff < 60 * 60 * 24:
+            multiplier = 2
+        elif diff < 60 * 60 * 24 * 7:
+            multiplier = 0.5
+        else:
+            multiplier = 0.25
+        return (int(record['score'] * multiplier), record['timestamp'])
 
     for record in sorted(collection, key=_frecency, reverse=True):
         print(record['value'])
